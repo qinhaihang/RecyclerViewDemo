@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 
 import com.qhh.recyclerviewlib.viewholde.BaseViewHolder;
 
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,12 +21,19 @@ import androidx.recyclerview.widget.RecyclerView;
  * @updateDate $Date$
  * @updateDes
  */
-public abstract class BaseAdapter<T extends BaseViewHolder> extends RecyclerView.Adapter<T> {
+public abstract class BaseAdapter<K,T extends BaseViewHolder> extends RecyclerView.Adapter<T> {
 
     private int layoutId;
 
+    private List<K> datas;
+
     public BaseAdapter(int layoutId) {
         this.layoutId = layoutId;
+    }
+
+    public BaseAdapter(int layoutId, List<K> datas) {
+        this.layoutId = layoutId;
+        this.datas = datas;
     }
 
     @NonNull
@@ -35,20 +44,29 @@ public abstract class BaseAdapter<T extends BaseViewHolder> extends RecyclerView
 
         View view = LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false);
 
+        baseViewHolder = (T) new BaseViewHolder(view);
 
         return baseViewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull T holder, int position) {
-
+        convert(holder,position);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return datas != null ? datas.size() : 0;
     }
 
-    public abstract void convert(T holder,int position);
+    public List<K> getDatas() {
+        return datas;
+    }
+
+    public void setDatas(List<K> datas) {
+        this.datas = datas;
+    }
+
+    public abstract void convert(T holder, int position);
 
 }

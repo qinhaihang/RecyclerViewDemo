@@ -1,6 +1,7 @@
 package com.sensetime.recyclerviewdemo;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.sensetime.recyclerviewdemo.adapter.BaseTestAdapter;
 import com.sensetime.recyclerviewdemo.bean.BaseTestBean;
@@ -37,5 +38,7 @@ public class MainActivity extends BaseActivity {
         BaseTestAdapter baseTestAdapter = new BaseTestAdapter(items);
         rv.setAdapter(baseTestAdapter);
 
+        baseTestAdapter.setOnItermClickLitener((adapter, view, position)
+                -> Toast.makeText(this, "click item position is "+ position, Toast.LENGTH_SHORT).show());
     }
 }

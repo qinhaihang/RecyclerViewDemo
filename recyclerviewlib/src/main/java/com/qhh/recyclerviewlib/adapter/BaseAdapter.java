@@ -27,6 +27,8 @@ public abstract class BaseAdapter<K,T extends BaseViewHolder> extends RecyclerVi
 
     private List<K> datas;
 
+    private OnItermClickLitener mOnItermClickLitener;
+
     public BaseAdapter(int layoutId) {
         this.layoutId = layoutId;
     }
@@ -45,6 +47,7 @@ public abstract class BaseAdapter<K,T extends BaseViewHolder> extends RecyclerVi
         View view = LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false);
 
         baseViewHolder = (T) new BaseViewHolder(view);
+        bindViewClickListener(baseViewHolder);
 
         return baseViewHolder;
     }
@@ -67,6 +70,30 @@ public abstract class BaseAdapter<K,T extends BaseViewHolder> extends RecyclerVi
         this.datas = datas;
     }
 
+    public void setOnItermClickLitener(OnItermClickLitener onItermClickLitener) {
+        mOnItermClickLitener = onItermClickLitener;
+    }
+
+    protected void bindViewClickListener(final T viewHolder){
+        if(viewHolder == null) return;
+
+        View itemView = viewHolder.itemView;
+
+        if(mOnItermClickLitener != null){
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = viewHolder.getAdapterPosition();
+                    mOnItermClickLitener.onItermClick(BaseAdapter.this,v,position);
+                }
+            });
+        }
+    }
+
     public abstract void convert(T holder, int position);
+
+    public interface OnItermClickLitener{
+        void onItermClick(BaseAdapter adapter,View view,int position);
+    }
 
 }

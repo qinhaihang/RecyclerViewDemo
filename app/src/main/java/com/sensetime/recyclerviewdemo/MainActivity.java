@@ -40,5 +40,10 @@ public class MainActivity extends BaseActivity {
 
         baseTestAdapter.setOnItermClickLitener((adapter, view, position)
                 -> Toast.makeText(this, "click item position is "+ position, Toast.LENGTH_SHORT).show());
+
+        /*baseTestAdapter.setOnItermLongClickListener((adapter,view,position) -> {
+            Toast.makeText(this, "long click item position is "+ position, Toast.LENGTH_SHORT).show();
+            return false;
+        });*/
     }
 }

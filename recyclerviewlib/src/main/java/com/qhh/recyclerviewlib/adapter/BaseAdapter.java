@@ -28,6 +28,7 @@ public abstract class BaseAdapter<K,T extends BaseViewHolder> extends RecyclerVi
     private List<K> datas;
 
     private OnItermClickLitener mOnItermClickLitener;
+    private OnItermLongClickListener mOnItermLongClickListener;
 
     public BaseAdapter(int layoutId) {
         this.layoutId = layoutId;
@@ -74,18 +75,29 @@ public abstract class BaseAdapter<K,T extends BaseViewHolder> extends RecyclerVi
         mOnItermClickLitener = onItermClickLitener;
     }
 
+    public void setOnItermLongClickListener(OnItermLongClickListener onItermLongClickListener) {
+        mOnItermLongClickListener = onItermLongClickListener;
+    }
+
     protected void bindViewClickListener(final T viewHolder){
         if(viewHolder == null) return;
 
         View itemView = viewHolder.itemView;
 
+        if(itemView == null) return;
+
         if(mOnItermClickLitener != null){
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = viewHolder.getAdapterPosition();
-                    mOnItermClickLitener.onItermClick(BaseAdapter.this,v,position);
-                }
+            itemView.setOnClickListener(v -> {
+                int position = viewHolder.getAdapterPosition();
+                mOnItermClickLitener.onItermClick(BaseAdapter.this,v,position);
+            });
+        }
+
+        if(mOnItermLongClickListener != null){
+            itemView.setOnLongClickListener(v -> {
+                int position = viewHolder.getAdapterPosition();
+                boolean handler = mOnItermLongClickListener.onItermLongClick(BaseAdapter.this, v, position);
+                return handler;
             });
         }
     }
@@ -94,6 +106,10 @@ public abstract class BaseAdapter<K,T extends BaseViewHolder> extends RecyclerVi
 
     public interface OnItermClickLitener{
         void onItermClick(BaseAdapter adapter,View view,int position);
+    }
+
+    public interface OnItermLongClickListener{
+        boolean onItermLongClick(BaseAdapter adapter,View view,int position);
     }
 
 }

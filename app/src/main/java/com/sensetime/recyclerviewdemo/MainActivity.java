@@ -1,16 +1,10 @@
 package com.sensetime.recyclerviewdemo;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.view.View;
 
-import com.sensetime.recyclerviewdemo.adapter.BaseTestAdapter;
-import com.sensetime.recyclerviewdemo.bean.BaseTestBean;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import com.sensetime.recyclerviewdemo.view.NormalActivity;
 
 public class MainActivity extends BaseActivity {
 
@@ -21,29 +15,18 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        RecyclerView rv = findViewById(R.id.rv);
 
-        List<BaseTestBean> items = new ArrayList<>();
+    }
 
-        for (int i = 0; i < 20; i++) {
-            BaseTestBean baseTestBean = new BaseTestBean();
-            i++;
-            baseTestBean.setItemContent("第 " + i + " 条目");
-            items.add(baseTestBean);
+    public void click(View view) {
+
+        switch(view.getId()){
+            case R.id.btn_normal_demo:
+                startActivity(new Intent(MainActivity.this, NormalActivity.class));
+                break;
+            default:
+                break;
         }
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        rv.setLayoutManager(layoutManager);
-
-        BaseTestAdapter baseTestAdapter = new BaseTestAdapter(items);
-        rv.setAdapter(baseTestAdapter);
-
-        baseTestAdapter.setOnItermClickLitener((adapter, view, position)
-                -> Toast.makeText(this, "click item position is "+ position, Toast.LENGTH_SHORT).show());
-
-        /*baseTestAdapter.setOnItermLongClickListener((adapter,view,position) -> {
-            Toast.makeText(this, "long click item position is "+ position, Toast.LENGTH_SHORT).show();
-            return false;
-        });*/
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.sensetime.recyclerviewdemo.view.NormalActivity;
+import com.sensetime.recyclerviewdemo.view.PositionActivity;
 
 public class MainActivity extends BaseActivity {
 
@@ -24,7 +25,8 @@ public class MainActivity extends BaseActivity {
             case R.id.btn_normal_demo:
                 startActivity(new Intent(MainActivity.this, NormalActivity.class));
                 break;
-            default:
+            case R.id.btn_position_demo:
+                startActivity(new Intent(MainActivity.this, PositionActivity.class));
                 break;
         }
 

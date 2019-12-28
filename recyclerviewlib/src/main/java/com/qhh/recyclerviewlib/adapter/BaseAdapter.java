@@ -1,5 +1,6 @@
 package com.qhh.recyclerviewlib.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public abstract class BaseAdapter<K,T extends BaseViewHolder> extends RecyclerView.Adapter<T> {
 
+    public Context mContext;
+
     private int layoutId;
 
     private List<K> datas;
@@ -42,6 +45,8 @@ public abstract class BaseAdapter<K,T extends BaseViewHolder> extends RecyclerVi
     @NonNull
     @Override
     public T onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        mContext = parent.getContext();
 
         T baseViewHolder = null;
 
